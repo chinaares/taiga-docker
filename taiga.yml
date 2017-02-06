@@ -8,6 +8,7 @@ data:
 db:
   image: postgres
   environment:
+    POSTGRES_DB_NAME: taiga
     POSTGRES_USER: taiga
     POSTGRES_PASSWORD: password
   volumes_from:
@@ -22,6 +23,8 @@ taigaback:
     EMAIL_PORT: 587
     EMAIL_HOST_USER: youremail@gmail.com
     EMAIL_HOST_PASSWORD: yourpassword
+    POSTGRES_HOST: 172.17.0.3
+    POSTGRES_PORT: 5432
   links:
     - db:postgres
   volumes_from:
@@ -29,6 +32,8 @@ taigaback:
 taigafront:
   build: taiga-front-dist
   hostname: dev.example.com
+  environment:
+    API: http://dev.example.com/api/v1/
   links:
     - taigaback
   volumes_from:

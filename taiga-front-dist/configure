@@ -42,3 +42,7 @@ cat > /usr/local/taiga/taiga-front-dist/dist/conf.json <<EOL
 
 
 EOL
+
+OLD_API_STR=$(echo "http://localhost:8000/api/v1/" | sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g')
+NEW_API_STR=$(echo "${API}" | sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g')
+sed -i "s/${OLD_API_STR}/${NEW_API_STR}/g" `grep "http://localhost:8000/api/v1/" -rl --include="*.*" /usr/local/taiga/taiga-front-dist/dist/` 
