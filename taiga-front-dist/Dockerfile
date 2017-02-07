@@ -2,6 +2,9 @@ FROM nginx:1.7
 
 MAINTAINER Hylke Visser <htdvisser@gmail.com>
 
+# W: GPG error: http://nginx.org wheezy Release: The following signatures were invalid: KEYEXPIRED 1471427554
+ADD nginx_signing.key /tmp/nginx_signing.key
+RUN cat /tmp/nginx_signing.key | apt-key add - 
 # Install Git
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
