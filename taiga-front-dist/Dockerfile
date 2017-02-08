@@ -1,4 +1,4 @@
-FROM nginx:1.7
+FROM nginx:1.11
 
 MAINTAINER Hylke Visser <htdvisser@gmail.com>
 
@@ -6,6 +6,7 @@ MAINTAINER Hylke Visser <htdvisser@gmail.com>
 ADD nginx_signing.key /tmp/nginx_signing.key
 RUN cat /tmp/nginx_signing.key | apt-key add - 
 # Install Git
+ADD sources.list /etc/apt/sources.list
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
 # NginX Configuration
@@ -23,7 +24,7 @@ RUN \
   mkdir -p /usr/local/taiga && \
   git clone https://github.com/taigaio/taiga-front-dist.git /usr/local/taiga/taiga-front-dist && \
   cd /usr/local/taiga/taiga-front-dist && \
-  git checkout stable
+  git checkout master
 
 # Configuration and Start scripts
 ADD ./configure /usr/local/taiga/configure

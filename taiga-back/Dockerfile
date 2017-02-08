@@ -1,8 +1,10 @@
-FROM python:3.4
+FROM python:3.6
 
 MAINTAINER Hylke Visser <htdvisser@gmail.com>
 
 # Install dependencies
+ADD sources.list /etc/apt/sources.list
+ADD pip.conf /etc/pip.conf
 RUN \
   apt-get update -qq && \
   apt-get install -y netcat && \
@@ -16,7 +18,7 @@ RUN \
   git clone https://github.com/taigaio/taiga-back.git /usr/local/taiga/taiga-back && \
   mkdir /usr/local/taiga/media /usr/local/taiga/static /usr/local/taiga/logs && \
   cd /usr/local/taiga/taiga-back && \
-  git checkout stable && \
+  git checkout master && \
   pip install -r requirements.txt && \
   touch /usr/local/taiga/taiga-back/settings/dockerenv.py && \
   touch /usr/local/taiga/circus.ini
